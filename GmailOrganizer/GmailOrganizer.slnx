@@ -1,0 +1,30 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="CleanArchitecture.nuspec" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/GmailOrganizer.AspireHost/GmailOrganizer.AspireHost.csproj" />
+    <Project Path="src/GmailOrganizer.ServiceDefaults/GmailOrganizer.ServiceDefaults.csproj" />
+    <Project Path="src/GmailOrganizer.Core/GmailOrganizer.Core.csproj" />
+    <Project Path="src/GmailOrganizer.Infrastructure/GmailOrganizer.Infrastructure.csproj" />
+    <Project Path="src/GmailOrganizer.UseCases/GmailOrganizer.UseCases.csproj" />
+    <Project Path="src/GmailOrganizer.Web/GmailOrganizer.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GmailOrganizer.FunctionalTests/GmailOrganizer.FunctionalTests.csproj">
+      <BuildDependency Project="src/GmailOrganizer.Web/GmailOrganizer.Web.csproj" />
+    </Project>
+    <Project Path="tests/GmailOrganizer.IntegrationTests/GmailOrganizer.IntegrationTests.csproj">
+      <BuildDependency Project="src/GmailOrganizer.Infrastructure/GmailOrganizer.Infrastructure.csproj" />
+    </Project>
+    <Project Path="tests/GmailOrganizer.UnitTests/GmailOrganizer.UnitTests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.AspireHost", "GmailOrganizer\src\GmailOrganizer.AspireHost\GmailOrganizer.AspireHost.csproj", "{3EF7F4A2-AD3C-49E2-AB15-6A96C9564DEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.Core", "GmailOrganizer\src\GmailOrganizer.Core\GmailOrganizer.Core.csproj", "{FCBDC2CF-EF58-43B4-9EC9-729F733E19A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.Infrastructure", "GmailOrganizer\src\GmailOrganizer.Infrastructure\GmailOrganizer.Infrastructure.csproj", "{012BCE13-2C11-4B37-9A50-4D8A6A22CB74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.ServiceDefaults", "GmailOrganizer\src\GmailOrganizer.ServiceDefaults\GmailOrganizer.ServiceDefaults.csproj", "{41A33280-15F0-4A29-927A-47337A91B41D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.UseCases", "GmailOrganizer\src\GmailOrganizer.UseCases\GmailOrganizer.UseCases.csproj", "{9BCB5F7D-2DF1-4BC1-A79F-23691645FD52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.Web", "GmailOrganizer\src\GmailOrganizer.Web\GmailOrganizer.Web.csproj", "{A262EBDC-FC79-4F59-B2C1-8D182FEB885F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.AspireTests", "GmailOrganizer\tests\GmailOrganizer.AspireTests\GmailOrganizer.AspireTests.csproj", "{C93A44D1-4C98-4663-A02F-07C7AA8C3C8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.FunctionalTests", "GmailOrganizer\tests\GmailOrganizer.FunctionalTests\GmailOrganizer.FunctionalTests.csproj", "{8DEF2065-CECE-4BC1-A0A2-DAEC917C7A06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.IntegrationTests", "GmailOrganizer\tests\GmailOrganizer.IntegrationTests\GmailOrganizer.IntegrationTests.csproj", "{807B09EC-4613-4384-BE05-67DB280346A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailOrganizer.UnitTests", "GmailOrganizer\tests\GmailOrganizer.UnitTests\GmailOrganizer.UnitTests.csproj", "{83C1E944-63BB-4101-85C1-0B848D26EE4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EF7F4A2-AD3C-49E2-AB15-6A96C9564DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF7F4A2-AD3C-49E2-AB15-6A96C9564DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF7F4A2-AD3C-49E2-AB15-6A96C9564DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF7F4A2-AD3C-49E2-AB15-6A96C9564DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCBDC2CF-EF58-43B4-9EC9-729F733E19A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCBDC2CF-EF58-43B4-9EC9-729F733E19A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCBDC2CF-EF58-43B4-9EC9-729F733E19A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCBDC2CF-EF58-43B4-9EC9-729F733E19A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{012BCE13-2C11-4B37-9A50-4D8A6A22CB74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{012BCE13-2C11-4B37-9A50-4D8A6A22CB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{012BCE13-2C11-4B37-9A50-4D8A6A22CB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{012BCE13-2C11-4B37-9A50-4D8A6A22CB74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41A33280-15F0-4A29-927A-47337A91B41D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41A33280-15F0-4A29-927A-47337A91B41D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41A33280-15F0-4A29-927A-47337A91B41D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41A33280-15F0-4A29-927A-47337A91B41D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BCB5F7D-2DF1-4BC1-A79F-23691645FD52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BCB5F7D-2DF1-4BC1-A79F-23691645FD52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BCB5F7D-2DF1-4BC1-A79F-23691645FD52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BCB5F7D-2DF1-4BC1-A79F-23691645FD52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A262EBDC-FC79-4F59-B2C1-8D182FEB885F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A262EBDC-FC79-4F59-B2C1-8D182FEB885F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A262EBDC-FC79-4F59-B2C1-8D182FEB885F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A262EBDC-FC79-4F59-B2C1-8D182FEB885F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C93A44D1-4C98-4663-A02F-07C7AA8C3C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C93A44D1-4C98-4663-A02F-07C7AA8C3C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C93A44D1-4C98-4663-A02F-07C7AA8C3C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C93A44D1-4C98-4663-A02F-07C7AA8C3C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DEF2065-CECE-4BC1-A0A2-DAEC917C7A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DEF2065-CECE-4BC1-A0A2-DAEC917C7A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DEF2065-CECE-4BC1-A0A2-DAEC917C7A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DEF2065-CECE-4BC1-A0A2-DAEC917C7A06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{807B09EC-4613-4384-BE05-67DB280346A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{807B09EC-4613-4384-BE05-67DB280346A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{807B09EC-4613-4384-BE05-67DB280346A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{807B09EC-4613-4384-BE05-67DB280346A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83C1E944-63BB-4101-85C1-0B848D26EE4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C1E944-63BB-4101-85C1-0B848D26EE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C1E944-63BB-4101-85C1-0B848D26EE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C1E944-63BB-4101-85C1-0B848D26EE4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE0B4572-2EA4-42F2-B51F-5AD7DC2E7028}
+	EndGlobalSection
+EndGlobal
