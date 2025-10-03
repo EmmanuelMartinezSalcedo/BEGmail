@@ -17,7 +17,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     builder.Property(u => u.TokenExpiry)
         .IsRequired();
 
-    // Mapear AccessToken como Owned Entity
     builder.OwnsOne(u => u.AccessToken, at =>
     {
       at.Property(p => p.Value)
@@ -26,7 +25,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         .IsRequired();
     });
 
-    // Mapear RefreshToken como Owned Entity
     builder.OwnsOne(u => u.RefreshToken, rt =>
     {
       rt.Property(p => p.Value)

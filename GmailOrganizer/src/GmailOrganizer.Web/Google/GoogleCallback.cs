@@ -1,13 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using GmailOrganizer.Core.UserAggregate;
 using GmailOrganizer.UseCases.Auth.Callback;
-using GmailOrganizer.Web.Google;
 using Microsoft.IdentityModel.Tokens;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace GmailOrganizer.Web.GoogleAuth;
+namespace GmailOrganizer.Web.Google;
 
 public class GoogleCallback : EndpointWithoutRequest<GoogleCallbackResponse>
 {
@@ -68,7 +65,6 @@ public class GoogleCallback : EndpointWithoutRequest<GoogleCallbackResponse>
         return;
       }
 
-      // Generar JWT
       var tokenHandler = new JwtSecurityTokenHandler();
       var key = Encoding.UTF8.GetBytes(_jwtKey);
       var claims = new List<Claim>
@@ -88,7 +84,6 @@ public class GoogleCallback : EndpointWithoutRequest<GoogleCallbackResponse>
       var token = tokenHandler.CreateToken(tokenDescriptor);
       var jwt = tokenHandler.WriteToken(token);
 
-      // Guardar JWT en cookie
       HttpContext.Response.Cookies.Append("jwt", jwt, new CookieOptions
       {
         HttpOnly = false,
@@ -248,23 +243,6 @@ public class GoogleCallback : EndpointWithoutRequest<GoogleCallbackResponse>
 </html>
 """;
 
-
-
     await SendStringAsync(html, 400, "text/html", ct);
   }
-}
-
-public class GoogleCallbackResponse
-{
-  public bool Success { get; set; }
-  public string Message { get; set; } = default!;
-  public bool IsNewUser { get; set; }
-  public UserDto? User { get; set; }
-}
-
-public class UserDto
-{
-  public int Id { get; set; }
-  public string Email { get; set; } = default!;
-  public string GoogleUserId { get; set; } = default!;
 }

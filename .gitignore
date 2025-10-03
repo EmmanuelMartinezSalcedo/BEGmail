@@ -170,3 +170,5 @@ token.json
 appsettings.json
 appsettings.*.json
 !appsettings.example.json
+
+src/GmailOrganizer.Web/log*.txt

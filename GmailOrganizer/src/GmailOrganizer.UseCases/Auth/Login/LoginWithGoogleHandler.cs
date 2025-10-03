@@ -1,20 +1,23 @@
-﻿using GmailOrganizer.Core.Services;
+﻿using Ardalis.Result;
+using GmailOrganizer.Core.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace GmailOrganizer.UseCases.Auth.Login;
-// Handler
-public class LoginWithGoogleHandler(IGmailService _authService)
-  : ICommandHandler<LoginWithGoogleCommand, Result<string>>
+
+public class GenerateGoogleAuthUrlHandler(
+    IGoogleAuthService googleAuthService,
+    ILogger<GenerateGoogleAuthUrlHandler> logger)
+    : ICommandHandler<GenerateGoogleAuthUrlCommand, Result<GenerateGoogleAuthUrlResult>>
 {
-  public async Task<Result<string>> Handle(LoginWithGoogleCommand request, CancellationToken ct)
+  public async Task<Result<GenerateGoogleAuthUrlResult>> Handle(
+      GenerateGoogleAuthUrlCommand request,
+      CancellationToken ct)
   {
-    try
-    {
-      var url = await _authService.GenerateAuthUrlAsync(request.State);
-      return Result.Success(url);
-    }
-    catch (Exception ex)
-    {
-      return Result.Error(ex.Message);
-    }
+    var state = Guid.NewGuid().ToString();
+    var authUrl = await googleAuthService.GenerateAuthUrlAsync(state);
+
+    logger.LogInformation("Generated Google Auth URL with state {State}", state);
+
+    return Result.Success(new GenerateGoogleAuthUrlResult(authUrl, state));
   }
 }

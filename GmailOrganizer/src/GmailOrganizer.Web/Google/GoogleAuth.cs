@@ -1,7 +1,8 @@
-﻿using GmailOrganizer.Core.Services;
+﻿using GmailOrganizer.UseCases.Auth.Login;
 
-namespace GmailOrganizer.Web.GoogleAuth;
-public class GoogleAuth(IGmailService _authService, ILogger<GoogleAuth> _logger)
+namespace GmailOrganizer.Web.Google;
+
+public class GoogleAuth(IMediator mediator)
   : EndpointWithoutRequest<GoogleAuthResponse>
 {
   public override void Configure()
@@ -17,11 +18,14 @@ public class GoogleAuth(IGmailService _authService, ILogger<GoogleAuth> _logger)
 
   public override async Task HandleAsync(CancellationToken ct)
   {
-    var state = Guid.NewGuid().ToString();
-    var authUrl = await _authService.GenerateAuthUrlAsync(state);
+    var result = await mediator.Send(new GenerateGoogleAuthUrlCommand(), ct);
 
-    _logger.LogInformation("Generated Google Auth URL with state {State}", state);
+    if (!result.IsSuccess)
+    {
+      await SendErrorsAsync(cancellation: ct);
+      return;
+    }
 
-    Response = new GoogleAuthResponse(authUrl, state);
+    Response = new GoogleAuthResponse(result.Value.AuthUrl, result.Value.State);
   }
 }

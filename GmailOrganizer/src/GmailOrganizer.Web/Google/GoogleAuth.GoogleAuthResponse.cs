@@ -1,3 +1,3 @@
-﻿namespace GmailOrganizer.Web.GoogleAuth;
+﻿namespace GmailOrganizer.Web.Google;
 
 public record GoogleAuthResponse(string Url, string State);

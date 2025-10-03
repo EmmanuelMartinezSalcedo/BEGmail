@@ -1,4 +1,4 @@
-﻿namespace GmailOrganizer.Web.GoogleAuth;
+﻿namespace GmailOrganizer.Web.Google;
 
 public class GoogleAuthRequest
 {

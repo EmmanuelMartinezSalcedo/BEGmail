@@ -1,5 +1,4 @@
-﻿using GmailOrganizer.Core.UserAggregate.Entities;
-using GmailOrganizer.Core.Services;
+﻿using GmailOrganizer.Core.Models;
 
 namespace GmailOrganizer.UseCases.Gmail.GetRecentEmails;
 

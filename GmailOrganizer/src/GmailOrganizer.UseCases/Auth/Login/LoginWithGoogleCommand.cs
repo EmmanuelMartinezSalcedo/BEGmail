@@ -1,3 +1,5 @@
 ﻿namespace GmailOrganizer.UseCases.Auth.Login;
 
-public record LoginWithGoogleCommand(string State) : ICommand<Result<string>>;
+public record GenerateGoogleAuthUrlCommand() : ICommand<Result<GenerateGoogleAuthUrlResult>>;
+
+public record GenerateGoogleAuthUrlResult(string AuthUrl, string State);

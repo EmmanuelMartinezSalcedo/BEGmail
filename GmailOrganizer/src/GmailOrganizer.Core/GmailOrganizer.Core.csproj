@@ -8,8 +8,6 @@
     <PackageReference Include="Ardalis.SmartEnum" />
     <PackageReference Include="Ardalis.Specification" />
     <PackageReference Include="Google.Apis.Auth" />
-    <PackageReference Include="Google.Apis.Auth.AspNetCore3" />
-    <PackageReference Include="Google.Apis.Gmail.v1" />
     <PackageReference Include="MediatR" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />

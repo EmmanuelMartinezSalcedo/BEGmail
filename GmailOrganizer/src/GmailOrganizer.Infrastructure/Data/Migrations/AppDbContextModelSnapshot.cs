@@ -43,6 +43,98 @@ namespace GmailOrganizer.Infrastructure.Data.Migrations
                     b.ToTable("Contributors");
                 });
 
+            modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.Entities.EmailProcessingLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("LabelAssigned")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("ProcessedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EmailProcessingLogs");
+                });
+
+            modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.Entities.LabelStat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EmailCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("LabelName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LabelStats");
+                });
+
+            modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.Entities.Subscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("EmailLimit")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(100);
+
+                    b.Property<int>("EmailsProcessed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Tier")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Subscriptions");
+                });
+
             modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.User", b =>
                 {
                     b.Property<int>("Id")
@@ -50,6 +142,9 @@ namespace GmailOrganizer.Infrastructure.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -67,6 +162,29 @@ namespace GmailOrganizer.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.Waitlist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Waitlists");
                 });
 
             modelBuilder.Entity("GmailOrganizer.Core.ContributorAggregate.Contributor", b =>
@@ -98,9 +216,36 @@ namespace GmailOrganizer.Infrastructure.Data.Migrations
                     b.Navigation("PhoneNumber");
                 });
 
+            modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.Entities.EmailProcessingLog", b =>
+                {
+                    b.HasOne("GmailOrganizer.Core.UserAggregate.User", null)
+                        .WithMany("EmailProcessingLogs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.Entities.LabelStat", b =>
+                {
+                    b.HasOne("GmailOrganizer.Core.UserAggregate.User", null)
+                        .WithMany("LabelStats")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.Entities.Subscription", b =>
+                {
+                    b.HasOne("GmailOrganizer.Core.UserAggregate.User", null)
+                        .WithOne("Subscription")
+                        .HasForeignKey("GmailOrganizer.Core.UserAggregate.Entities.Subscription", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.User", b =>
                 {
-                    b.OwnsOne("GmailOrganizer.Core.UserAggregate.AccessToken", "AccessToken", b1 =>
+                    b.OwnsOne("GmailOrganizer.Core.UserAggregate.ValueObjects.AccessToken", "AccessToken", b1 =>
                         {
                             b1.Property<int>("UserId")
                                 .HasColumnType("integer");
@@ -119,7 +264,7 @@ namespace GmailOrganizer.Infrastructure.Data.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.OwnsOne("GmailOrganizer.Core.UserAggregate.RefreshToken", "RefreshToken", b1 =>
+                    b.OwnsOne("GmailOrganizer.Core.UserAggregate.ValueObjects.RefreshToken", "RefreshToken", b1 =>
                         {
                             b1.Property<int>("UserId")
                                 .HasColumnType("integer");
@@ -143,6 +288,15 @@ namespace GmailOrganizer.Infrastructure.Data.Migrations
 
                     b.Navigation("RefreshToken")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GmailOrganizer.Core.UserAggregate.User", b =>
+                {
+                    b.Navigation("EmailProcessingLogs");
+
+                    b.Navigation("LabelStats");
+
+                    b.Navigation("Subscription");
                 });
 #pragma warning restore 612, 618
         }

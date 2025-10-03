@@ -1,16 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using Ardalis.SharedKernel;
-using GmailOrganizer.Core.Services;
-using GmailOrganizer.Core.UserAggregate;
-using GmailOrganizer.Core.UserAggregate.Entities;
-using GmailOrganizer.Core.UserAggregate.Specifications;
-using GmailOrganizer.Web.GmailTags;
+using GmailOrganizer.UseCases.Gmail.GetLabels;
 
-public class GmailTags(
-  IGmailService gmailService,
-  IRepository<User> userRepo,
-  ILogger<GmailTags> logger)
-  : EndpointWithoutRequest<GmailLabelsResult>
+namespace GmailOrganizer.Web.Google;
+
+public class GmailTags(IMediator mediator)
+  : EndpointWithoutRequest<GmailTagsResponse>
 {
   public override void Configure()
   {
@@ -37,24 +31,21 @@ public class GmailTags(
       return;
     }
 
-    var user = await userRepo.FirstOrDefaultAsync(new UserByGoogleIdSpec(googleUserId), ct);
-    if (user is null)
+    var result = await mediator.Send(new GetGmailLabelsCommand(googleUserId), ct);
+
+    if (!result.IsSuccess)
     {
-      AddError("Usuario no encontrado");
+      AddError(string.Join("; ", result.Errors));
       return;
     }
 
-    logger.LogInformation("Fetching labels for user {Email}", user.Email);
-
-    try
-    {
-      var labelsResult = await gmailService.GetLabelsAsync(user.AccessToken.Value, user.RefreshToken.Value, ct);
-      Response = labelsResult;
-    }
-    catch (Exception ex)
-    {
-      logger.LogError(ex, "Error fetching Gmail labels");
-      AddError($"Error fetching labels: {ex.Message}");
-    }
+    Response = new GmailTagsResponse(
+      result.Value.Success,
+      result.Value.Message,
+      result.Value.SystemLabels.Select(l => new LabelDto(l.Id, l.Name, l.Type)).ToList(),
+      result.Value.UserLabels.Select(l => new LabelDto(l.Id, l.Name, l.Type)).ToList(),
+      result.Value.AllLabels.Select(l => new LabelDto(l.Id, l.Name, l.Type)).ToList(),
+      result.Value.TotalCount
+    );
   }
 }

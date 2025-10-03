@@ -1,4 +1,4 @@
-﻿namespace GmailOrganizer.Web.GmailTags;
+﻿namespace GmailOrganizer.Web.Google;
 
 public class GmailTagsRequest
 {

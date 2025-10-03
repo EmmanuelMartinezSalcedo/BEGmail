@@ -1,5 +1,7 @@
-﻿using GmailOrganizer.Core.Services;
+﻿using GmailOrganizer.Core.Interfaces;
 using GmailOrganizer.UseCases.Contributors.Create;
+using GmailOrganizer.Infrastructure.ExternalServices;
+using GmailOrganizer.Infrastructure.BackgroundServices;
 using GmailOrganizer.Web.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -22,10 +24,11 @@ var appLogger = new SerilogLoggerFactory(logger)
 builder.Services.AddOptionConfigs(builder.Configuration, appLogger, builder);
 builder.Services.AddServiceConfigs(appLogger, builder);
 builder.Services.AddScoped<IGmailService, GmailService>();
-builder.Services.AddScoped<IGmailClassificationService, GmailClassificationService>();
-builder.Services.AddScoped<IUserEmailClassifier, UserEmailClassifier>();
-builder.Services.AddHostedService<GmailClassificationBackgroundService>();
+builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
+builder.Services.AddScoped<IGeminiService, GeminiService>();
 
+builder.Services.AddSingleton<GmailClassificationBackgroundService>();
+builder.Services.AddHostedService(provider => provider.GetRequiredService<GmailClassificationBackgroundService>());
 
 // ---------------------- JWT Authentication ----------------------
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new ArgumentNullException("Jwt:Key");
@@ -48,6 +51,17 @@ builder.Services.AddAuthentication(options =>
     ValidIssuer = jwtIssuer,
     ValidAudience = jwtAudience,
     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+  };
+  options.Events = new JwtBearerEvents
+  {
+    OnMessageReceived = context =>
+    {
+      if (context.Request.Cookies.ContainsKey("jwt"))
+      {
+        context.Token = context.Request.Cookies["jwt"];
+      }
+      return Task.CompletedTask;
+    }
   };
 });
 builder.Services.AddAuthorization();
@@ -72,7 +86,7 @@ builder.Services.AddCors(options =>
 {
   options.AddPolicy("AllowAngular", policy =>
   {
-    policy.WithOrigins("http://localhost:4200") // 👈 tu frontend Angular
+    policy.WithOrigins("http://localhost:4200")
           .AllowAnyHeader()
           .AllowAnyMethod()
           .AllowCredentials();

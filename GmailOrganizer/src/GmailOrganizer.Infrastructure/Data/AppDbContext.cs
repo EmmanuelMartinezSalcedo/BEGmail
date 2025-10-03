@@ -1,5 +1,7 @@
 ﻿using GmailOrganizer.Core.ContributorAggregate;
 using GmailOrganizer.Core.UserAggregate;
+using GmailOrganizer.Core.UserAggregate.Entities;
+using GmailOrganizer.Core.WaitlistAggregate;
 
 // Add-Migration InitialCreation -Project GmailOrganizer.Infrastructure -StartupProject GmailOrganizer.Web -OutputDir Data\Migrations
 // Update-Database -Project GmailOrganizer.Infrastructure -StartupProject GmailOrganizer.Web
@@ -13,6 +15,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options,
 
   public DbSet<Contributor> Contributors => Set<Contributor>();
   public DbSet<User> Users => Set<User>();
+  public DbSet<EmailProcessingLog> EmailProcessingLogs => Set<EmailProcessingLog>();
+  public DbSet<LabelStat> LabelStats => Set<LabelStat>();
+  public DbSet<Subscription> Subscriptions => Set<Subscription>();
+  public DbSet<Waitlist> Waitlists => Set<Waitlist>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
